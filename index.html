@@ -1,0 +1,1558 @@
+<!--声明：该代码纯免费分享，如果你是购买的，请联系售卖者退款，作者山雾秋，QQ180782569-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1" />
+    <meta name="description" content="刘十三魔改发布页山雾秋">
+    <title>欢迎来到山雾秋发布页</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdui/0.4.2/css/mdui.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='http://fonts.font.im/css?family=Itim' rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <!--统计代码-->
+    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({ id: "3KD0D04WDjdKjqBv", ck: "3KD0D04WDjdKjqBv" })</script>
+    <video id="background-video" autoplay loop muted playsinline>
+        <source src="https://api.hn/video.php?return=video_url" type="video/mp4">
+        您的浏览器不支持视频播放。
+    </video>
+
+    <!-- 以下为自定义样式 -->
+    <style>
+        #background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            /* 将视频置于背景层 */
+        }
+
+        body {
+            /* 设置背景 */
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background: black;
+        }
+
+        .overlay {
+            display: none;
+            /* 默认隐藏 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* 半透明黑色背景 */
+            z-index: 999;
+            /* 确保遮罩层在其他内容之上 */
+        }
+
+        .mdui-card {
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.5s, box-shadow 0.3s ease-in-out;
+            border-radius: 7px;
+            backdrop-filter: blur(5px);
+            overflow: hidden;
+            /* 确保内容不会溢出 */
+            position: relative;
+            /* 为新文字定位 */
+        }
+
+        .mdui-card .mdui-card-primary,
+        .mdui-card .mdui-card-content {
+            transition: opacity 0.6s;
+            /* 过渡效果 */
+        }
+
+        .mdui-card .new-text {
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            color: #fff;
+            /* 新文字颜色 */
+            opacity: 0;
+            /* 初始时不可见 */
+            transition: opacity 0.6s;
+            /* 过渡效果 */
+            z-index: 1;
+            /* 在原始文字之上 */
+            padding: 20px;
+            line-height: 24px;
+            /* 行间距设置为24像素 */
+        }
+
+        /* 鼠标悬停时，隐藏内容区域 */
+        .mdui-card:hover .mdui-card-content {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s linear;
+        }
+
+        /* 卡片标题样式 */
+        .mdui-card-primary {
+            padding: 10px;
+
+        }
+
+        /* 卡片内容样式 */
+        .mdui-card-content {
+            padding: 10px;
+            transition: visibility 0s, opacity 0.6s linear;
+        }
+
+        .mdui-card:hover .new-text {
+            opacity: 1;
+            /* 鼠标悬停时，显示新文字 */
+            color: #fff;
+            /* 新文字颜色 */
+        }
+
+        .mdui-card-primary,
+        .mdui-card-content {
+            color: #000;
+        }
+
+        .card-thumbnail {
+            width: 80px;
+            /* 设定方形图片大小 */
+            height: 80px;
+            object-fit: cover;
+            /* 确保图片内容填满方形 */
+            border-radius: 0, 8px;
+            /* 可根据需要调整圆角 */
+            margin-right: 10px;
+            /* 控制图片与文本间距 */
+            float: left;
+            /* 图片靠左，文字内容靠右 */
+            opacity: 0.9;
+            /* 设置图片透明度 */
+        }
+
+        .card-thumbnail:hover {
+            display: block;
+            /* 鼠标悬停时，图片消失 */
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: rgb(255, 255, 255);
+            /* 半透明文字颜色 */
+            padding: 3px;
+            display: none;
+            /* 默认隐藏 */
+            white-space: normal;
+            /* 自动换行 */
+            overflow-wrap: break-word;
+            /* 在必要时换行 */
+        }
+
+        .mdui-card:hover .card-description {
+            display: block;
+            /* 鼠标悬停时显示 */
+        }
+
+        /*卡片移动*/
+        .card-left {
+            transform: translateX(-100%);
+        }
+
+        .card-right {
+            transform: translateX(100%);
+        }
+
+        .card-visible {
+            transform: translateX(0);
+        }
+
+        .expand-trigger {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        /* 定义基础动画效果 */
+        .card-move {
+            transition-property: transform, opacity;
+            transition-duration: 0.5s !important;
+            transition-delay: 0.3s;
+            transition-timing-function: ease-in-out, ease;
+        }
+
+        /* 以下为自适应代码 */
+        /* 基础样式，适用于所有设备 */
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* 使用媒体查询为小屏幕设备重写样式 */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            .mdui-card {
+                width: 90%;
+                /* 增加宽度 */
+                max-width: 600px;
+                /* 限制最大宽度 */
+                margin: 10px auto;
+                /* 居中显示 */
+                padding: 10px;
+                /* 增加内边距 */
+            }
+        }
+
+        /* 使用媒体查询为大屏幕设备增加额外样式 */
+        @media (min-width: 769px) and (max-width: 1024px) {
+
+            /* 针对平板设备的样式 */
+            .mdui-card {
+                width: 70%;
+                /* 增加宽度 */
+                max-width: 600px;
+                /* 限制最大宽度 */
+                margin: 10px auto;
+                /* 居中显示 */
+                padding: 20px;
+                /* 增加内边距 */
+            }
+        }
+
+        /* 使用媒体查询为超大屏幕设备增加样式 */
+        @media (min-width: 1025px) {
+
+            /* 针对桌面显示器的样式 */
+            .mdui-card {
+                width: 90%;
+                /* 增加宽度 */
+                /* 限制最大宽度 */
+                margin: 10px auto;
+                /* 居中显示 */
+                padding: 20px;
+                /* 增加内边距 */
+            }
+        }
+
+
+        /* 以下为增加点击效果的css*/
+        /* 定义点击效果的基础样式 */
+        .click-effect {
+            position: absolute;
+            border-radius: 50%;
+            background-color: black;
+            opacity: 0.5;
+            transform: scale(0);
+            transition: transform 0.8s ease, opacity 0.8s ease;
+            /* 设置过渡效果 */
+        }
+
+        /* 点击动画效果 */
+        .click-effect.animate {
+            transform: scale(1);
+            /* 扩散到一定大小 */
+            opacity: 0;
+            /* 透明度变为0，逐渐消失 */
+        }
+
+        /*去除下划线*/
+        .remove-underline {
+            text-decoration: none;
+        }
+
+        /* 卡片鼠标悬停效果 */
+        .mdui-card:hover {
+            transform: scale(1.05);
+            /* 轻微放大 */
+            transition: transform 0.3s ease;
+            /* 平滑过渡 */
+
+        }
+
+
+        #background-tip {
+            position: fixed;
+            left: 50%;
+            bottom: 10px;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.2);
+            /* 半透明背景 */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-align: center;
+            z-index: 1000;
+            /* 确保在顶部 */
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .avatar {
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            width: 30px;
+            height: 30px;
+        }
+
+        .avatar img {
+            width: 100%;
+            /* 使图片填满容器 */
+            height: 100%;
+            /* 使图片填满容器 */
+            border-radius: 50%;
+            /* 使图片呈现圆形 */
+            object-fit: cover;
+            /* 保证图片不失真地填充容器 */
+        }
+
+        /* 头像框样式 */
+        .avatar-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .avatar-rotate {
+            animation: rotate 10s infinite linear;
+        }
+
+        /* 头像边框样式 */
+        .gradient-border-shadow {
+            position: relative;
+            border-radius: 50%;
+            overflow: hidden;
+            width: 90px;
+            height: 90px;
+            border: 2px solid #fff;
+            animation: border-color-change 5s infinite;
+            opacity: 0.8;
+        }
+
+        .gecizhanshi,
+        .guanyuzuozhe {
+            position: fixed;
+            /* 固定在屏幕上，随页面滚动 */
+            bottom: 10px;
+            /* 距离底部 10px */
+            z-index: 9999;
+            /* 确保位于最上层 */
+            border-radius: 50%;
+            overflow: hidden;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: 2px solid transparent;
+            animation: border-color-change 5s infinite;
+            opacity: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            /* 添加透明度过渡效果 */
+        }
+
+        .gecizhanshi {
+            left: calc(50% - 120px - 30px / 2);
+        }
+
+        .guanyuzuozhe {
+            right: calc(50% - 120px - 30px / 2);
+        }
+
+        .gecizhanshi:hover,
+        .guanyuzuozhe:hover {
+            transform: scale(1.2);
+        }
+
+        /* 确保文字不会超过按钮大小 */
+        .gecizhanshi::before,
+        .guanyuzuozhe::before {
+            max-width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+
+        @keyframes border-color-change {
+            0% {
+                box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.5), 0 0 15px 5px rgba(0, 255, 0, 0.5), 0 0 15px 5px rgba(0, 0, 255, 0.5), 0 0 15px 5px rgba(255, 0, 255, 0.5), 0 0 15px 5px rgba(0, 255, 255, 0.5);
+            }
+
+            20% {
+                box-shadow: 0 0 15px 5px rgba(255, 255, 0, 0.5), 0 0 15px 5px rgba(0, 255, 255, 0.5), 0 0 15px 5px rgba(0, 0, 255, 0.5), 0 0 15px 5px rgba(255, 0, 255, 0.5), 0 0 15px 5px rgba(255, 0, 0, 0.5);
+            }
+
+            40% {
+                box-shadow: 0 0 15px 5px rgba(0, 255, 255, 0.5), 0 0 15px 5px rgba(0, 0, 255, 0.5), 0 0 15px 5px rgba(255, 0, 255, 0.5), 0 0 15px 5px rgba(255, 0, 0, 0.5), 0 0 15px 5px rgba(255, 255, 0, 0.5);
+            }
+
+            60% {
+                box-shadow: 0 0 15px 5px rgba(0, 0, 255, 0.5), 0 0 15px 5px rgba(255, 0, 255, 0.5), 0 0 15px 5px rgba(255, 0, 0, 0.5), 0 0 15px 5px rgba(255, 255, 0, 0.5), 0 0 15px 5px rgba(0, 255, 255, 0.5);
+            }
+
+            80% {
+                box-shadow: 0 0 15px 5px rgba(255, 0, 255, 0.5), 0 0 15px 5px rgba(255, 0, 0, 0.5), 0 0 15px 5px rgba(255, 255, 0, 0.5), 0 0 15px 5px rgba(0, 255, 255, 0.5), 0 0 15px 5px rgba(0, 0, 255, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 15px 5px rgba(255, 255, 0, 0.5), 0 0 15px 5px rgba(0, 255, 0, 0.5), 0 0 15px 5px rgba(0, 0, 255, 0.5), 0 0 15px 5px rgba(255, 0, 255, 0.5), 0 0 15px 5px rgba(0, 255, 255, 0.5);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .text-to-show {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 2s, visibility 2s;
+            /* 过渡效果设置为2秒 */
+
+            /* 文字内容的位置 */
+            position: absolute;
+            top: 55%;
+            /* 从顶部开始，距离为父元素高度的50% */
+            left: 50%;
+            /* 从左侧开始，距离为父元素宽度的50% */
+            transform: translate(-50%, -50%);
+            /* 使文字居中显示 */
+
+            /* 文字样式 */
+            font-size: 16px;
+            /* 字体大小 */
+            color: #ffffff;
+            /* 字体颜色 */
+            text-align: center;
+            /* 文字居中对齐 */
+            width: 80%;
+            /* 文字区域的宽度 */
+            max-width: 600px;
+            /* 文字区域的最大宽度 */
+            margin: 0 auto;
+            /* 上下外边距设置为0，左右自动，实现水平居中 */
+            padding: 20px;
+            /* 文字区域的内边距 */
+            border-radius: 10px;
+            /* 边框圆角 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* 盒阴影效果 */
+
+            /* 美化字体的额外样式 */
+            font-family: 'Arial', sans-serif;
+            /* 设置字体族 */
+            font-weight: 500;
+            /* 设置字体的粗细 */
+            line-height: 1.6;
+            /* 设置行高，改善可读性 */
+            letter-spacing: 1px;
+            /* 设置字母间距 */
+            text-shadow: 1px 1px 2px rgba(156, 89, 13, 0.597);
+            /* 文字阴影，增加深度感 */
+
+            /* 确保文本自动换行 */
+            word-wrap: break-word;
+            /* 允许长单词或URL地址在行末自动换行 */
+            overflow-wrap: break-word;
+            /* 同word-wrap，更现代的属性名称 */
+            white-space: normal;
+            /* 默认行为，允许空格和换行符进行换行 */
+        }
+
+        /* 歌单弹出样式（从底部弹出） */
+        .playlist-popup {
+            position: fixed;
+            bottom: -50%;
+            /* 初始位置隐藏在底部 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            max-width: 400px;
+            color: white;
+            padding: 20px;
+            border-radius: 50px;
+            transition: bottom 1s ease, opacity 0.5s ease;
+            z-index: 1000;
+            opacity: 0;
+            overflow-y: auto;
+            /* 启用垂直滚动 */
+            max-height: 250px;
+            /* 限制高度以只显示五首歌左右 */
+        }
+
+        /* 显示时的样式 */
+        .show-playlist {
+            bottom: 20%;
+            /* 弹出到可见位置 */
+            opacity: 1;
+        }
+
+        /* 隐藏滚动条（但保留滚动功能） */
+        .playlist-popup {
+            scrollbar-width: none;
+            /* 针对 Firefox */
+        }
+
+        .playlist-popup::-webkit-scrollbar {
+            display: none;
+            /* 针对 Chrome、Safari 和 Edge */
+        }
+
+        /* 歌单项样式 */
+        .playlist-item {
+            color: #79e4ffec;
+            cursor: pointer;
+            padding: 10px 0;
+            text-align: center;
+            border-radius: 50px;
+            margin: 5px 0;
+            background-color: #7c6a9a86;
+            transition: transform 0.2s, color 0.2s;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(156, 89, 13, 0.597);
+        }
+
+        /* 鼠标悬停效果 */
+        .playlist-item:hover {
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* 点击效果 */
+        .playlist-item:active {
+            transform: scale(0.95);
+            color: #ffcc00;
+        }
+
+        .playing {
+            /* 选用高亮颜色 */
+            color: #ffcc00;
+        }
+
+        /* 菜单样式 */
+        .menu-icon {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .menu-icon:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .menu-content {
+            position: fixed;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 9999;
+        }
+
+        .menu-content a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 8px 0;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .menu-content a:hover {
+            background: linear-gradient(45deg, #568fd0, #3f8fc5b0);
+            transform: scale(1.05);
+        }
+
+        /* 通知区域样式 */
+        .notification-area {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+            max-height: 15px;
+            background-color: rgba(0, 128, 0, 0);
+            /* 轻微透明的绿色背景 */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: flex;
+            /* 居中显示文本 */
+            font-size: 14px;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* 轮播文本样式 */
+        .notification-text {
+            display: inline-block;
+            white-space: nowrap;
+            /* 防止文本换行 */
+        }
+
+        .notification-icon {
+            float: left;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .notification-icon i {
+            font-size: 18px;
+            color: rgb(0, 0, 0);
+        }
+
+        /* 摇晃动画 */
+        @keyframes shakePause {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translate(-1px, -2px) rotate(-5deg);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translate(2px, 2px) rotate(5deg);
+            }
+        }
+
+        /* 初始设置，不循环 */
+        .shake-icon {
+            display: inline-block;
+            font-size: 1em;
+            animation: shakePause 1s ease-in-out;
+            /* 动画持续0.5秒 */
+            animation-iteration-count: 1;
+            /* 只运行一次 */
+        }
+
+        #current-song-title {
+            font-size: 1em;
+            /* 调整字体大小 */
+            font-weight: bold;
+            /* 加粗文字 */
+            color: #ffdd57;
+            /* 设置文字颜色 */
+            text-shadow: 2px 2px 4px rgba(240, 178, 32, 0.5);
+            /* 添加阴影 */
+            font-family: 'Arial', sans-serif;
+            /* 选择字体 */
+            background: linear-gradient(to right, #ffffff, #feb47b);
+            /* 渐变背景 */
+            -webkit-background-clip: text;
+            /* 仅应用到文字上 */
+            color: transparent;
+            /* 文字透明，显示渐变 */
+            display: inline-block;
+            /* 内边距 */
+            border-radius: 5px;
+            /* 圆角 */
+            transition: transform 0.3s ease-in-out;
+            /* 添加过渡效果 */
+
+            margin-right: 10px;
+            /* 与右侧保持间距 */
+            margin-bottom：10px;
+        }
+    </style>
+</head>
+
+<body class="mdui-theme-primary-black mdui-theme-accent-pink">
+    <div id="overlay" class="overlay"></div> <!-- 遮罩层 -->
+    <div id="menu-icon" class="menu-icon">☰</div>
+    <div id="menu-content" class="menu-content">
+        <a href="#" id="change-wallpaper">切换背景</a>
+        <a href="#" id="random-card">随机作品</a>
+        <a href="#" id="dark-mode">暗影模式</a>
+        <a href="https://v6.51.la/report/daily?comId=483091" id="dark-mode">网站统计</a>
+    </div>
+
+    <div id="gecizhanshi" class="gecizhanshi">
+        玩法
+    </div>
+    <div id="guanyuzuozhe" class="guanyuzuozhe">
+        关于
+    </div>
+    <div id="text-to-show" class="text-to-show">
+        <p>这里有你想知道的一切<br>
+            需要点击头像才可以查看
+        </p>
+    </div>
+    <!-- 歌单弹出列表 -->
+    <div id="playlist" class="playlist-popup">
+        <!-- 动态生成的歌单列表将在此处插入 -->
+    </div>
+
+    <div id="title-card" class="mdui-container mdui-m-t-2">
+        <div class="mdui-row">
+            <div class="mdui-col-md-6 mdui-col-offset-md-3 mdui-m-b-2">
+                <div class="mdui-card">
+                    <!-- 新文字容器 -->
+                    <div class="new-text">
+                        <p>山高人为峰，</p>
+                        <p>雾深藏锋芒，</p>
+                        <p>秋来花尽我自高歌！</p>
+                    </div>
+
+                    <div id="notification-area" class="notification-area">
+                        <i class="fa fa-bell shake-icon"></i>
+                        <i>：</i>
+                        <div id="notification-text" class="notification-text">这是一个通知</div>
+                    </div>
+                    <div class="mdui-card-primary">
+                        <div class="mdui-card-primary-title">
+                            <span id="colorful-text" class="bolder"
+                                style="color:#e88f22;font-size: 30px;text-shadow: 1px 1px 3px rgba(141, 87, 25, 0.597);">山雾秋☪</span>
+                        </div>
+
+                        <!-- 诗句显示位置 -->
+                        <div class="mdui-card-primary-subtitle" style="color:#ffffff;">
+                            <p id="random-poem">诗云...</p>
+                        </div>
+                    </div>
+                    <div class="mdui-card-content" style="color: #ffffff; text-align: center;">
+                        <a href="https://v6.51.la/report/overview?comId=483091" target="_blank"
+                            class="remove-underline"></a>
+                        <span id="current-song-title"><!-- 当前播放的歌曲名将显示在此处 --></span>
+                    </div>
+
+                    <div id="avatar" class="avatar-container">
+                        <img src="https://s3.bmp.ovh/imgs/2024/09/08/1e157341b7c62420.jpg" alt="头像"
+                            class="gradient-border-shadow avatar">
+                    </div>
+                    <audio id="myAudio"></audio>
+                </div>
+            </div>
+            <div class="mdui-col-md-6 mdui-col-offset-md-3">
+                <div class="mdui-row">
+                    <div class="mdui-col-xs-12 mdui-col-sm-6 mdui-m-b-2">
+
+                        <div class="mdui-card clickable">
+                            <!-- 
+						   <img src="card1.jpg" class="card-thumbnail">
+						   -->
+                            <a href="http://link3.cc/liu13" target="_blank" class="remove-underline">
+                                <div class="mdui-card-header">
+                                    <div class="mdui-card-header-title" style="color:#9a2f2f ;">
+                                        <b>资源页</b>
+                                        <div class="card-description">
+                                            就是一些东东整合在一起
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="mdui-col-xs-12 mdui-col-sm-6 mdui-m-b-2">
+                        <div class="mdui-card clickable">
+                            <!-- 
+						   <img src="card1.jpg" class="card-thumbnail">
+						   -->
+                            <a href="http://hillmis.rth5.com" target="_blank" class="remove-underline">
+                                <div class="mdui-card-header">
+                                    <div class="mdui-card-header-title" style="color:#ebd086;">
+                                        <b>HillMis</b>
+                                        <div class="card-description">
+                                            我的博客，还没有做
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mdui-col-md-6 mdui-col-offset-md-3">
+                <div class="mdui-row">
+                    <div class="mdui-col-xs-12 mdui-col-sm-6 mdui-m-b-2">
+                        <div class="mdui-card clickable">
+                            <!-- 
+						   <img src="card1.jpg" class="card-thumbnail">
+						   -->
+                            <a href="http://ss.liu13.fun" target="_blank" class="remove-underline">
+                                <div class="mdui-card-header">
+                                    <div class="mdui-card-header-title" style="color:#7dc1f4;">
+                                        <b>赏颜阁</b>
+                                        <div class="card-description">
+                                            顾名思义，皇上请欣赏
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="mdui-col-xs-12 mdui-col-sm-6 mdui-m-b-2">
+                        <div class="mdui-card clickable">
+                            <!-- 
+						   <img src="card1.jpg" class="card-thumbnail">
+						   -->
+                            <a href="http://mnv.liu13.fun/" target="_blank" class="remove-underline">
+                                <div class="mdui-card-header">
+                                    <div class="mdui-card-header-title" style="color: #6eb498;">
+                                        <b>背单词</b>
+                                        <div class="card-description">
+                                            刷视频还不忘背单词
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="mdui-col-xs-12 mdui-col-sm-6 mdui-m-b-2">
+                            <div class="mdui-card clickable">
+                                <!-- 
+						   <img src="card1.jpg" class="card-thumbnail">
+						   -->
+                                <a href="http://music.liu13.fun" target="_blank" class="remove-underline">
+                                    <div class="mdui-card-header">
+                                        <div class="mdui-card-header-title" style="color: #1ba1a6;">
+                                            <b>听乐轩</b>
+                                            <div class="card-description">
+                                                一个没什么用的音乐播放页
+                                            </div>
+
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="mdui-col-xs-12 mdui-col-sm-6 mdui-m-b-2">
+                            <div class="mdui-card clickable">
+                                <!-- 
+						   <img src="card1.jpg" class="card-thumbnail">
+						   -->
+                                <a href="https://pan.quark.cn/s/1a31c91d4a08" target="_blank" class="remove-underline">
+                                    <div class="mdui-card-header">
+                                        <div class="mdui-card-header-title" style="color: #6760c8;">
+                                            <b>软件库</b>
+                                            <div class="card-description">
+                                                分享一堆好用的软件
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script>
+        // 点击效果实现的js代码
+        document.addEventListener('click', function (event) {
+            // 定义两个圆的半径
+            var largeRadius = 25; // 大圆的半径
+            var smallRadius = 15; // 小圆的半径
+
+            // 创建大圆元素
+            var largeCircle = createCircle(largeRadius, '#2fb7d5', event);
+            document.body.appendChild(largeCircle);
+
+            // 创建小圆元素
+            var smallCircle = createCircle(smallRadius, '#2fb7d5', event);
+            document.body.appendChild(smallCircle);
+
+            // 启动动画
+            setTimeout(function () {
+                largeCircle.classList.add('animate');
+            }, 0);
+
+            setTimeout(function () {
+                smallCircle.classList.add('animate');
+            }, 100); // 小圆动画延迟100ms
+
+            // 定义移除元素的函数
+            function removeCircles() {
+                largeCircle.removeEventListener('transitionend', removeCircles);
+                smallCircle.removeEventListener('transitionend', removeCircles);
+                document.body.removeChild(largeCircle);
+                document.body.removeChild(smallCircle);
+            }
+
+            // 添加事件监听器以在过渡结束后移除元素
+            largeCircle.addEventListener('transitionend', removeCircles);
+            smallCircle.addEventListener('transitionend', removeCircles);
+
+            // 创建圆形元素的函数
+            function createCircle(radius, color, event) {
+                var circle = document.createElement('div');
+                circle.className = 'click-effect';
+                circle.style.width = circle.style.height = (2 * radius) + 'px';
+                circle.style.backgroundColor = color;
+                circle.style.left = event.pageX - radius + 'px';
+                circle.style.top = event.pageY - radius + 'px';
+                return circle;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            function fetchPoem() {
+                fetch('https://www.wudada.online/Api/ScSj')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const poemElement = document.getElementById('random-poem');
+                        let poemText = data.data || '这里是随机诗句';
+                        // 检查诗句长度，如果过长则重新请求
+                        if (poemText.length > 12) {
+                            fetchPoem(); // 重新请求
+                        } else {
+                            poemElement.innerText = poemText;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching the poem:', error);
+                        const poemElement = document.getElementById('random-poem');
+                        poemElement.innerText = '诗云...';
+                    });
+            }
+
+            fetchPoem();
+        });
+
+
+        //字体变化颜色
+        const colors = ['#fc7676', '#785bf7', '#7dc1f4', '#6eb498', '#ebd086'];
+        let colorIndex = 0;
+
+        function changeTextColor() {
+            const textElement = document.getElementById('colorful-text');
+            textElement.style.color = colors[colorIndex];
+            colorIndex = (colorIndex + 1) % colors.length;
+        }
+
+        // 每1000毫秒改变一次颜色
+        setInterval(changeTextColor, 3000);
+
+        // 生成随机颜色的函数
+        //
+        let usedColors = [];
+        function getRandomColor() {
+            let color;
+            do {
+                color = '#' + Math.floor(Math.random() * 16777215).toString(16); // 生成一个随机的十六进制颜色
+            } while (usedColors.includes(color)); // 检查颜色是否已经在数组中
+            usedColors.push(color); // 颜色可用，添加到数组中
+            return color;
+        }
+
+        // 获取所有卡片元素
+        document.querySelectorAll('.mdui-card').forEach(card => {
+            const initialBackgroundColor = card.style.background;
+            const content = card.querySelector('.mdui-card-primary, .mdui-card-content');
+
+            card.addEventListener('mouseover', function () {
+                this.style.background = getRandomColor();
+                content.style.opacity = '0';
+            });
+
+            card.addEventListener('mouseout', function () {
+                this.style.background = initialBackgroundColor;
+                content.style.opacity = '1';
+            });
+        });
+
+
+        //以下为禁用右键和F12
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 123) { // F12的键码是123
+                event.preventDefault();
+                // 这里可以添加一些提示，alert('开发者工具已被禁用');
+            }
+        });
+        document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+        });
+
+        //
+        document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+        });
+        // 获取头像元素和音频元素
+        const avatar = document.querySelector('.avatar');
+        const audio = document.getElementById('myAudio');
+        //卡片移动控制
+        document.addEventListener('DOMContentLoaded', function () {
+            // 获取所有卡片元素
+            var cards = document.querySelectorAll('.mdui-col-xs-12.mdui-col-sm-6 .mdui-card');
+            // 定义一个变量来跟踪卡片是否正在移动
+            var isMoving = false;
+
+            // 移动卡片的函数
+            function moveCards() {
+                // 切换isMoving状态
+                isMoving = !isMoving;
+
+                cards.forEach(function (card, index) {
+                    // 移除之前的动画效果以避免冲突
+                    card.classList.remove('card-visible', 'card-left', 'card-right', 'card-move');
+
+                    if (isMoving) {
+                        // 根据卡片的索引决定移动方向
+                        if (index % 2 === 0) {
+                            // 偶数索引的卡片向左移动
+                            card.classList.add('card-left');
+                        } else {
+                            // 奇数索引的卡片向右移动
+                            card.classList.add('card-right');
+                        }
+                    } else {
+                        // 恢复原状
+                        card.classList.add('card-visible');
+                    }
+                    // 增加动画效果
+                    card.classList.add('card-move');
+                });
+
+                // 检查卡片是否开始移动
+                if (isMoving) {
+                    // 隐藏文字
+                    document.getElementById('text-to-show').style.opacity = '1';
+                    document.getElementById('text-to-show').style.visibility = 'visible';
+                } else {
+                    // 显示文字
+                    document.getElementById('text-to-show').style.opacity = '0';
+                    document.getElementById('text-to-show').style.visibility = 'hidden';
+                }
+            }
+
+            // 给gecizhanshi按钮添加点击事件监听器
+            var gecizhanshiButton = document.getElementById('gecizhanshi');
+            gecizhanshiButton.addEventListener('click', moveCards);
+
+            // 给guanyuzuozhe按钮添加点击事件监听器
+            var guanyuzuozheButton = document.getElementById('guanyuzuozhe');
+            guanyuzuozheButton.addEventListener('click', moveCards);
+        });
+
+        //不同文本显示
+        document.addEventListener('DOMContentLoaded', function () {
+            const avatar = document.querySelector('.avatar');
+            const textToShowElement = document.getElementById('text-to-show');
+            const gecizhanshiButton = document.getElementById('gecizhanshi');
+            const guanyuzuozheButton = document.getElementById('guanyuzuozhe');
+            let lyrics = [];
+            let isMoving = false;
+            let isRotating = false;
+            let isShowingPlaylist = false; // 用于跟踪歌单列表是否在显示
+
+            const aboutText = "这里是山雾秋的作品发布页<br>基于北漠网络(https://beimowl.com)<br>免费分享的源代码美化修改<br>网页背景和随机诗句为免费公益API<br>学习前端加180782569一起学习";
+            const hintText = "点击头像开始播放音乐，下方按钮功能变为歌词和歌单<br>功能有趣，请您体验"; // 新增提示文本
+            // 歌单列表
+            const songs = [
+                { title: "荒", file: "music_files/荒.mp3", lyrics: "music_files/荒-郑鱼儿.lrc" },
+                { title: "Call Me Maybe", file: "music_files/Call Me Maybe.mp3", lyrics: "music_files/Call_Me_Maybe.lrc" },
+                { title: "朝朝如念", file: "music_files/朝朝如念.mp3", lyrics: "music_files/朝朝如念.lrc" },
+                { title: "经济舱 (Live)", file: "music_files/经济舱.mp3", lyrics: "music_files/经济舱.lrc" },
+                { title: "罗生门（Follow）", file: "music_files/罗生门（Follow）.mp3", lyrics: "music_files/罗生门（Follow）.lrc" },
+                { title: "青花", file: "music_files/青花 - 周传雄.mp3", lyrics: "music_files/青花-周传雄.lrc" },
+                { title: "下潜", file: "music_files/下潜 - 川青.mp3", lyrics: "music_files/下潜-川青.lrc" },
+                { title: "下一段旅程", file: "music_files/下一段旅程 - 张杰.mp3", lyrics: "music_files/下一段旅程-张杰.lrc" },
+                { title: "篝火旁", file: "music_files/篝火旁.mp3", lyrics: "music_files/篝火旁.lrc" },
+                { title: "晴天", file: "music_files/晴天.mp3", lyrics: "music_files/晴天.lrc" },
+                { title: "可惜没如果", file: "music_files/可惜没如果.mp3", lyrics: "music_files/可惜没如果.lrc" },
+                { title: "Start Over", file: "music_files/Start Over.mp3", lyrics: "music_files/Start_Over.lrc" },
+            ];
+
+
+            const playlistElement = document.getElementById('playlist');
+
+            function generatePlaylistHTML() {
+                return songs.map((song) => `<p class="playlist-item" data-file="${song.file}" data-lyrics="${song.lyrics}">${song.title}</p>`).join('');
+            }
+
+            playlistElement.innerHTML = generatePlaylistHTML();
+
+            // 加载歌词文件并解析
+            function loadLyrics(lyricsFile) {
+                fetch(lyricsFile)
+                    .then(response => response.text())
+                    .then(data => {
+                        lyrics = parseLyrics(data); // 解析并存储歌词
+                        updateLyricsDisplay(0); // 重置歌词显示，从0秒开始
+                    })
+                    .catch(error => console.error('Error loading the lyrics file:', error));
+            }
+
+            function playSong(songFile, lyricsFile) {
+                const audioPlayer = document.getElementById('myAudio');
+                audioPlayer.src = songFile;
+                audioPlayer.play();
+
+                // 切换图标
+                const notificationIcon = document.querySelector('.fa-bell');
+                if (notificationIcon) {
+                    notificationIcon.classList.remove('fa-bell');
+                    notificationIcon.classList.add('fa-music');
+                }
+
+                // 高亮当前播放的歌曲
+                document.querySelectorAll('.playlist-item').forEach(item => item.classList.remove('playing'));
+                const currentSongItem = document.querySelector(`.playlist-item[data-file="${songFile}"]`);
+                if (currentSongItem) {
+                    currentSongItem.classList.add('playing');
+                }
+
+                const songTitleElement = document.getElementById('current-song-title');
+                const currentSong = songs.find(song => song.file === songFile);
+                songTitleElement.textContent = currentSong ? `${currentSong.title}` : ''; // 添加音乐符号
+
+                loadLyrics(lyricsFile);
+
+                audioPlayer.addEventListener('timeupdate', function () {
+                    updateLyricsDisplay(audioPlayer.currentTime);
+                });
+            }
+
+            audio.addEventListener('ended', function () {
+                const notificationIcon = document.querySelector('.fa-music');
+                if (notificationIcon) {
+                    notificationIcon.classList.remove('fa-music');
+                    notificationIcon.classList.add('fa-bell');
+                }
+            });
+
+
+
+            // 为歌单中的每个项目添加点击事件，点击后加载对应的歌词和歌曲
+            playlistElement.addEventListener('click', function (event) {
+                if (event.target.classList.contains('playlist-item')) {
+                    const selectedSongFile = event.target.getAttribute('data-file');
+                    const selectedLyricsFile = event.target.getAttribute('data-lyrics');
+
+                    playSong(selectedSongFile, selectedLyricsFile); // 播放选中的歌曲并加载对应的歌词
+                    textToShowElement.style.display = 'none';  // 显示歌词区域
+                }
+            });
+
+            // 解析LRC歌词文件
+            function parseLyrics(data) {
+                const lines = data.split('\n');
+                let parsedLyrics = [];
+                lines.forEach(line => {
+                    const match = line.match(/^\[(\d{2}):(\d{2})\.(\d{2,3})\](.*)/); // 精确匹配到毫秒
+                    if (match) {
+                        const minutes = parseInt(match[1], 10);
+                        const seconds = parseInt(match[2], 10);
+                        const milliseconds = parseInt(match[3], 10) / 1000;
+                        const time = minutes * 60 + seconds + milliseconds;
+                        parsedLyrics.push({
+                            time: time, // 解析后的时间为秒的小数形式
+                            content: match[4] // 歌词内容
+                        });
+                    }
+                });
+                return parsedLyrics;
+            }
+            //更新歌词显示
+            function updateLyricsDisplay(currentTime) {
+                // 查找当前时间应显示的歌词索引
+                let currentLyricIndex = 0;
+                for (let i = 0; i < lyrics.length; i++) {
+                    if (lyrics[i].time > currentTime) {
+                        currentLyricIndex = i - 1;
+                        break;
+                    }
+                }
+
+                // 显示三行歌词，中间一行为当前播放的歌词
+                const visibleLyrics = lyrics.slice(Math.max(0, currentLyricIndex - 1), currentLyricIndex + 2);
+                const currentLyric = visibleLyrics[1] ? visibleLyrics[1].content : ''; // 当前歌词内容
+
+                // 在文本区域显示歌词
+                const textToShowElement = document.getElementById('text-to-show');
+                textToShowElement.innerHTML = visibleLyrics.map((lyric, index) => {
+                    const isCurrentLyric = index === 1; // 中间一行是当前播放的歌词
+                    return `<p style="font-size: ${isCurrentLyric ? '1.2em' : '1em'}; color: ${isCurrentLyric ? '#79e4ffec' : '#fff'};">${lyric.content}</p>`;
+                }).join('');
+
+                // 更新通知区域为当前播放的歌词
+                const notificationText = document.getElementById('notification-text');
+                notificationText.textContent = currentLyric;
+
+                // 平滑滚动歌词
+                textToShowElement.scrollTop = textToShowElement.scrollHeight;
+            }
+
+
+            function moveCards() {
+                isMoving = !isMoving;
+                const cards = document.querySelectorAll('.mdui-col-xs-12.mdui-col-sm-6 .mdui-card');
+
+                cards.forEach(function (card, index) {
+                    card.classList.remove('card-visible', 'card-left', 'card-right', 'card-move');
+
+                    if (isMoving) {
+                        if (index % 2 === 0) {
+                            card.classList.add('card-left');
+                        } else {
+                            card.classList.add('card-right');
+                        }
+                    } else {
+                        card.classList.add('card-visible');
+                    }
+
+                    card.classList.add('card-move');
+                });
+            }
+            let isSwitching = false;  // 标志，表示是否正在切换歌曲
+            let hasPlayed = false;    // 标志，表示音乐是否已经播放过
+
+            // 随机播放一首歌曲，仅在首次播放时调用
+            function playRandomSong() {
+                if (isSwitching) return;  // 若正在切换，则直接返回，防止冲突
+                isSwitching = true;       // 开始切换时，将标志设置为 true
+
+                const randomSong = songs[Math.floor(Math.random() * songs.length)];
+                playSong(randomSong.file, randomSong.lyrics);  // 播放随机歌曲
+            }
+
+            // 切换歌词显示和按钮文字
+            function toggleLyricsDisplay(show) {
+                textToShowElement.style.display = show ? 'block' : 'none';
+                textToShowElement.innerHTML = show ? '歌词内容' : '';  // 替换为实际歌词内容
+            }
+
+            // 点击头像事件处理
+            avatar.addEventListener('click', function () {
+                if (!hasPlayed) {
+                    // 首次点击头像时播放随机歌曲
+                    playRandomSong();
+                    toggleLyricsDisplay(true);    // 显示歌词区域
+                    isRotating = true;
+                    avatar.classList.add('avatar-rotate');  // 开始旋转动画
+                    guanyuzuozheButton.innerText = "歌单";  // 切换“关于作者”按钮为“歌单”
+                    hasPlayed = true;  // 设置为已播放过
+                } else {
+                    // 当音乐已播放过，点击头像切换播放/暂停
+                    if (audio.paused) {
+                        audio.play();
+                        toggleLyricsDisplay(true);   // 显示歌词区域
+                        avatar.classList.add('avatar-rotate');  // 开始旋转动画
+                    } else {
+                        audio.pause();
+                        toggleLyricsDisplay(false);  // 隐藏歌词区域
+                        avatar.classList.remove('avatar-rotate');  // 停止旋转动画
+                    }
+                }
+            });
+
+            // 监听音频播放结束事件，将 `isSwitching` 重置
+            audio.addEventListener('ended', function () {
+                isSwitching = false;
+            });
+            audio.addEventListener('error', function () {
+                isSwitching = false;  // 播放失败时，也重置标志
+            });
+            audio.addEventListener('play', function () {
+                isSwitching = false;  // 开始播放后，重置标志
+            });
+
+
+
+            function updateLyrics() {
+                updateLyricsDisplay(audio.currentTime);
+            }
+            //按钮文字变化
+            let lyricsExpanded = true;
+            let playlistExpanded = true;
+            // 歌词展示按钮/玩法按钮
+            gecizhanshiButton.addEventListener('click', function () {
+                if (!audio.paused) {
+                    isShowingPlaylist = true; // 确保显示歌词时不显示歌单
+                    textToShowElement.style.display = 'block';
+                    updateLyricsDisplay(audio.currentTime);
+                    if (!lyricsExpanded) {
+                        this.textContent = '收起';
+                        lyricsExpanded = false;
+                    } else {
+                        this.textContent = '歌词';
+                        lyricsExpanded = true;
+                    }
+                } else {
+                    textToShowElement.innerHTML = hintText; // 当音乐未播放时，显示提示文本
+                    textToShowElement.style.display = 'block'; // 确保文本区域可见
+                    gecizhanshiButton.innerText = "朋友"; // 当音乐未播放时，将按钮文字设置为“朋友”
+                }
+            });
+
+            // 关于作者按钮（切换为歌单列表按钮）
+            guanyuzuozheButton.addEventListener('click', function () {
+                textToShowElement.style.display = 'none';  // 隐藏歌词区域
+                if (!audio.paused) {
+                    isShowingPlaylist = true; // 标记为正在显示歌单列表
+                    textToShowElement.innerHTML = playlistText; // 显示歌单列表
+                } else {
+                    textToShowElement.innerHTML = aboutText; // 显示关于作者信息
+                    textToShowElement.style.display = 'block'; // 确保文本区域可见
+                    guanyuzuozheButton.innerText = "你好"; // 恢复按钮为“关于作者”
+                }
+            });
+
+            // 监听音频播放状态，显示当前播放的歌词
+            audio.addEventListener('play', function () {
+                textToShowElement.style.display = 'block'; // 显示歌词区域
+                avatar.style.animation = 'rotate 10s infinite linear'; // 开始旋转
+            });
+
+            audio.addEventListener('pause', function () {
+                textToShowElement.style.display = 'none'; // 隐藏歌词区域
+                playlistElement.classList.remove('show-playlist'); // 隐藏歌单
+                gecizhanshiButton.innerText = "玩法"; // 恢复按钮为“玩法”
+
+                avatar.style.animation = 'none'; // 停止旋转
+            });
+            // 监听音频播放状态，显示当前播放的歌词
+            audio.addEventListener('play', function () {
+                textToShowElement.style.display = 'none'; // 显示歌词区域
+                gecizhanshiButton.innerText = "歌词";
+                guanyuzuozheButton.innerText = "歌单"; // 播放时将按钮文字设置为“歌单”
+                avatar.style.animation = 'rotate 10s infinite linear'; // 开始旋转
+            });
+
+            audio.addEventListener('pause', function () {
+                textToShowElement.style.display = 'none'; // 隐藏歌词区域
+                playlistElement.classList.remove('show-playlist'); // 隐藏歌单
+                guanyuzuozheButton.innerText = "关于"; // 暂停时将按钮文字恢复为“关于”
+                avatar.style.animation = 'none'; // 停止旋转
+            });
+            // 点击歌单按钮时的事件处理函数
+            guanyuzuozheButton.addEventListener('click', function () {
+                if (!audio.paused) { // 如果音乐正在播放
+                    if (this.innerText === "歌单") { // 如果按钮文字是“歌单”
+                        playlistElement.classList.add('show-playlist'); // 显示歌单列表
+                        this.innerText = "收起"; // 改变按钮文字为“收起”
+                    } else if (this.innerText === "收起") { // 如果按钮文字是“收起”
+                        playlistElement.classList.remove('show-playlist'); // 隐藏歌单列表
+                        this.innerText = "歌单"; // 改变按钮文字为“歌单”
+                    }
+                }
+            });
+
+
+            // 点击歌单中的歌曲名时切换歌曲并关闭歌单
+            playlistElement.addEventListener('click', function (event) {
+                if (event.target.classList.contains('playlist-item')) {
+                    const songFile = event.target.getAttribute('data-file'); // 获取歌曲文件路径
+                    const songLyrics = event.target.getAttribute('data-lyrics'); // 获取歌曲歌词
+                    audio.src = songFile; // 切换歌曲
+                    audio.play(); // 播放音乐
+                    avatar.style.animation = 'rotate 10s infinite linear'; // 开始旋转动画
+                    textToShowElement.innerHTML = songLyrics; // 显示歌词
+                    textToShowElement.style.display = 'block'; // 显示歌词区域
+
+                    // 添加点击反馈效果
+                    event.target.style.transform = 'scale(0.95)'; // 点击缩小效果
+                    setTimeout(() => {
+                        event.target.style.transform = ''; // 恢复原始状态
+                    }, 200); // 200毫秒后恢复
+
+                    // 关闭歌单窗口
+                    playlistElement.classList.remove('show-playlist');
+
+                }
+
+            });
+        });
+
+        window.addEventListener('scroll', function () {
+            var gecizhanshi = document.querySelector('.gecizhanshi');
+            var guanyuzuozhe = document.querySelector('.guanyuzuozhe');
+            if (window.scrollY > 50) {
+                gecizhanshi.style.opacity = '0';
+                guanyuzuozhe.style.opacity = '0';
+            } else {
+                gecizhanshi.style.opacity = '0.8';
+                guanyuzuozhe.style.opacity = '0.8';
+            }
+        });
+        // 显示菜单
+        document.getElementById('menu-icon').addEventListener('click', function (event) {
+            var menuContent = document.getElementById('menu-content');
+            var overlay = document.getElementById('overlay');
+
+            // 切换菜单和遮罩层的显示状态
+            if (menuContent.style.display === 'block') {
+                menuContent.style.display = 'none';
+                overlay.style.display = 'none';
+            } else {
+                menuContent.style.display = 'block';
+                overlay.style.display = 'block';
+            }
+
+            // 防止点击菜单图标时触发关闭
+            event.stopPropagation();
+        });
+
+        // 点击遮罩层关闭菜单
+        document.getElementById('overlay').addEventListener('click', function () {
+            var menuContent = document.getElementById('menu-content');
+            var overlay = document.getElementById('overlay');
+            menuContent.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // 防止点击菜单内容时关闭
+        document.getElementById('menu-content').addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+
+        // 切换壁纸功能
+        document.getElementById('change-wallpaper').addEventListener('click', function () {
+            fetch('https://api.hn/video.php?return=video_url')
+                .then(response => response.text()) // API返回的是视频URL的纯文本
+                .then(videoUrl => {
+                    const video = document.getElementById('background-video');
+                    video.src = videoUrl; // 更新视频源
+                    video.load(); // 重新加载并播放视频
+                })
+                .catch(error => console.error('获取视频失败:', error));
+            // 刷新页面
+            location.reload();
+        });
+
+        // 随机进入一个卡片
+        document.getElementById('random-card').addEventListener('click', function () {
+            const cards = document.querySelectorAll('.mdui-card a');
+            const randomCard = cards[Math.floor(Math.random() * cards.length)];
+            window.open(randomCard.href, '_blank');
+        });
+
+        // 深色模式
+        document.getElementById('dark-mode').addEventListener('click', function () {
+            // 获取视频元素
+            const video = document.getElementById('background-video');
+            // 切换视频显示状态
+            if (video.style.display === 'none') {
+                video.style.display = 'block'; // 显示视频
+                document.body.style.backgroundColor = ''; // 恢复原始背景
+                this.textContent = '暗影模式';
+            } else {
+                video.style.display = 'none'; // 隐藏视频
+                document.body.style.backgroundColor = 'black'; // 切换为黑色背景
+                this.textContent = '炫酷模式';
+            }
+        });
+        ///
+        const notificationText = document.getElementById("notification-text");
+        const audioPlayer = document.getElementById('myAudio');
+        let notificationInterval;
+        const notifications = [
+            "欢迎来到山雾秋的作品发布页",
+            "作品持续更新中...",
+            "更多内容点击资源页",
+        ];
+        let currentIndex = 0; // 当前显示的通知索引
+
+        // 定义通知轮播函数
+        function showNextNotification() {
+            if (!audioPlayer.paused) {
+                // 音乐播放时不更新通知内容
+                return;
+            }
+            const currentNotification = notifications[currentIndex];
+            notificationText.textContent = currentNotification;
+            currentIndex = (currentIndex + 1) % notifications.length;
+        }
+
+        // 初始化定时器函数，用于控制通知轮播
+        function startNotificationInterval() {
+            notificationInterval = setInterval(showNextNotification, 5000);
+        }
+
+        function stopNotificationInterval() {
+            clearInterval(notificationInterval);
+        }
+
+        // 监听音乐播放和暂停事件
+        audioPlayer.addEventListener('play', function () {
+            stopNotificationInterval(); // 音乐播放时停止通知轮播
+        });
+
+        audioPlayer.addEventListener('pause', function () {
+            startNotificationInterval(); // 音乐暂停时重新启动通知轮播
+        });
+
+        // 页面加载时启动通知轮播
+        document.addEventListener('DOMContentLoaded', function () {
+            startNotificationInterval();
+        });
+
+    </script>
+</body>
+
+</html>
