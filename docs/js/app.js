@@ -371,7 +371,7 @@ class App {
                 <label>作者:</label>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     <div style="flex: 1;">
-                        <p style="margin: 0; font-size: 0.9em;"><a href="https://iu13.fun" target="_blank" style="color: var(--text-color);text-decoration: none;">hillmis</a></p>
+                        <p style="margin: 0; font-size: 0.9em;"><a href="https://liu13.fun" target="_blank" style="color: var(--text-color);text-decoration: none;">hillmis</a></p>
                     </div>
                 </div>
             </div>
