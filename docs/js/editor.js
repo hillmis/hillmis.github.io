@@ -53,7 +53,7 @@ class Editor {
                     fontSize: 14,
                     lineNumbers: 'on',
                     scrollBeyondLastLine: false,
-                    wordWrap: 'on',
+                    wordWrap: 'off',
                     tabSize: 4,
                     insertSpaces: true,
                     colorDecorators: true,
